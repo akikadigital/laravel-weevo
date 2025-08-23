@@ -11,6 +11,7 @@ class WeevoServiceProvider extends ServiceProvider
         // Register any application services.
         $this->app->bind('weevo', function () {
             return new Weevo(
+                config('weevo.username'),
                 config('weevo.api_key'),
                 config('weevo.api_secret')
             );

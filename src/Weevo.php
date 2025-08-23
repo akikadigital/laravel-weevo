@@ -10,13 +10,15 @@ class Weevo
     public $debugMode;
     public $url;
 
+    public $username;
     public $apiKey;
     public $apiSecret;
     // Your code here
     use WeevoConnect;
 
-    public function __construct($apiKey, $apiSecret)
+    public function __construct($username, $apiKey, $apiSecret)
     {
+        $this->username = $username;
         $this->apiKey = $apiKey;
         $this->apiSecret = $apiSecret;
 
@@ -25,45 +27,19 @@ class Weevo
         $this->url = config('weevo.' . $this->environment . '.url');
     }
 
-    public function getToken()
+    public function createDelivery($deliveryData)
     {
-        $url = $this->url . '/token';
-        $body = [
-            'grant_type' => 'client_credentials',
-            'client_id' => $this->apiKey,
-            'client_secret' => $this->apiSecret,
-            'scope' => 'api'
-        ];
+        $url = $this->url . '/deliveries/create';
 
-        $response = $this->makeAuthRequest($this->apiKey, $url, $body, 'POST');
-
-        if ($response->successful()) {
-            $data = $response->json();
-            return $data['access_token'];
-        } else {
-            if ($this->debugMode) {
-                info('------------------- Get Token Error -------------------');
-                info('getToken response: ' . $response->body());
-                info('------------------- End Get Token Error -------------------');
-            }
-            return null;
-        }
-    }
-
-    public function createOrder($apiToken, $orderData)
-    {
-        $url = $this->url . '/orders/create';
-        $body = $orderData;
-
-        $response = $this->makeRequest($this->apiKey, $apiToken, $url, $body, 'POST');
+        $response = $this->makeRequest($url, $deliveryData);
 
         if ($response->successful()) {
             return $response->json();
         } else {
             if ($this->debugMode) {
-                info('------------------- Create Order Error -------------------');
-                info('createOrder response: ' . $response->body());
-                info('------------------- End Create Order Error -------------------');
+                info('------------------- Create Delivery Error -------------------');
+                info('createDelivery response: ' . $response->body());
+                info('------------------- End Create Delivery Error -------------------');
             }
             return null;
         }
