@@ -1,17 +1,14 @@
 <?php
+// Weevo API Configuration
+$environment = env('WEEVO_ENV', 'sandbox');
+$env_key = strtoupper($environment);
+
 return [
-    'env' => env('WEEVO_ENV', 'sandbox'), // sandbox or production
+    'env' => $environment, // sandbox or production
     'debug' => env('WEEVO_DEBUG', true),
-    'sandbox' => [
-        'api_key' => env('WEEVO_SANDBOX_API_KEY', 'T3st123'),
-        'api_secret' => env('WEEVO_SANDBOX_API_SECRET', 'T3st123'),
-        'url' => 'https://api.weevo.ke/api/v1',
-    ],
-    'production' => [
-        'api_key' => env('WEEVO_API_KEY', 'T3st123'),
-        'api_secret' => env('WEEVO_API_SECRET', 'T3st123'),
-        'url' => 'https://api.weevo.ke/api/v1',
-    ],
+    'api_key' => env('WEEVO_' . $env_key . '_API_KEY', 'T3st123'),
+    'api_secret' => env('WEEVO_' . $env_key . '_API_SECRET', 'T3st123'),
+    'url' => env('WEEVO_' . $env_key . '_URL', 'https://api.weevo.ke/api/v1'),
 ];
 
 /**
