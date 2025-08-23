@@ -11,18 +11,3 @@ return [
     'api_secret' => env('WEEVO_' . $env_key . '_API_SECRET', ''),
     'url' => $environment == 'sandbox' ? 'https://weevo-api.test/api/v1/' : 'https://api.weeko.ke/api/v1/',
 ];
-
-/**
- * Environment Variables
- * Copy the following variables in ENV and pass values
- * WEEVO_ENV=
- * WEEVO_DEBUG=
- * WEEVO_SANDBOX_USERNAME=
- * WEEVO_SANDBOX_API_KEY=
- * WEEVO_SANDBOX_API_SECRET=
- * WEEVO_SANDBOX_URL=
- * WEEVO_PRODUCTION_USERNAME=
- * WEEVO_PRODUCTION_API_KEY=
- * WEEVO_PRODUCTION_API_SECRET=
- * WEEVO_PRODUCTION_URL=
- */
