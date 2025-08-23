@@ -1,0 +1,42 @@
+{
+    "name": "akika/laravel-weevo",
+    "description": "Weevo package for Laravel to allow merchants to connect",
+    "homepage": "https://github.com/Akika-Digital/laravel-weevo",
+    "type": "library",
+    "keywords": [
+        "weevo",
+        "courier",
+        "shopping",
+        "akika"
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.0",
+        "illuminate/support": "^8.0 || ^9.0 || ^10.0 || ^11.0 || ^12.0",
+		"illuminate/http":"^8.0 || ^9.0 || ^10.0 || ^11.0 || ^12.0",
+		"guzzlehttp/guzzle": "^7.5"
+    },
+	"license": "MIT",
+    "autoload": {
+      "psr-4": {
+        "Akika\\LaravelWeevo\\": "src/"
+      }
+    },
+	"authors": [
+        {
+            "name": "Felix Nyabwari",
+            "email": "fenicfelix@gmail.com"
+        }
+    ],
+    "extra": {
+      	"laravel": {
+			"providers": [
+			"Akika\\LaravelWeevo\\WeevoServiceProvider"
+			],
+			"aliases": {
+				"Weevo": "Akika\\LaravelWeevo\\Facades\\Weevo"
+			}
+      	}
+    }
+  }
+  
