@@ -24,12 +24,12 @@ class Weevo
 
         $this->environment = config('weevo.env');
         $this->debugMode = config('weevo.debug');
-        $this->url = config('weevo.' . $this->environment . '.url');
+        $this->url = config('weevo.url');
     }
 
     public function createDelivery($deliveryData)
     {
-        $url = $this->url . '/deliveries/create';
+        $url = rtrim($this->url, '/') . '/deliveries/create';
 
         $response = $this->makeRequest($url, $deliveryData);
 

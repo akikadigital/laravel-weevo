@@ -12,8 +12,8 @@ trait WeevoConnect
         $headers = [
             'Content-Type' => 'application/json',
             'username' => $this->username,
-            'api_key' => $this->apiKey,
-            'api_secret' => $this->apiSecret
+            'apikey' => $this->apiKey,
+            'apisecret' => $this->apiSecret
         ];
 
         $response = Http::withHeaders($headers)->acceptJson();

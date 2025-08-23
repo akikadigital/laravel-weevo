@@ -9,5 +9,5 @@ return [
     'username' => env('WEEVO_' . $env_key . '_USERNAME', ''),
     'api_key' => env('WEEVO_' . $env_key . '_API_KEY', ''),
     'api_secret' => env('WEEVO_' . $env_key . '_API_SECRET', ''),
-    'url' => $environment == 'sandbox' ? 'https://weevo-api.test/api/v1/' : 'https://api.weeko.ke/api/v1/',
+    'url' => $environment == 'sandbox' ? 'https://weevo-api.test/v1/' : 'https://api.weeko.ke/v1/',
 ];
