@@ -45,11 +45,11 @@ class Weevo
         }
     }
 
-    public function getOrder($apiToken, $orderId)
+    public function getDelivery($tripId)
     {
-        $url = $this->url . '/orders/show/' . $orderId;
+        $url = rtrim($this->url, '/') . '/deliveries/show/' . $tripId;
 
-        $response = $this->makeRequest($this->apiKey, $apiToken, $url, [], 'GET');
+        $response = $this->makeRequest($url, []);
 
         if ($response->successful()) {
             return $response->json();
@@ -63,19 +63,19 @@ class Weevo
         }
     }
 
-    public function getOrderStatus($apiToken, $orderId)
+    public function getDeliveryStatus($tripId)
     {
-        $url = $this->url . '/orders/status/' . $orderId;
+        $url = rtrim($this->url, '/') . '/deliveries/status/' . $tripId;
 
-        $response = $this->makeRequest($this->apiKey, $apiToken, $url, [], 'GET');
+        $response = $this->makeRequest($url, []);
 
         if ($response->successful()) {
             return $response->json();
         } else {
             if ($this->debugMode) {
-                info('------------------- Get Order Status Error -------------------');
-                info('getOrderStatus response: ' . $response->body());
-                info('------------------- End Get Order Status Error -------------------');
+                info('------------------- Get Order Error -------------------');
+                info('getOrder response: ' . $response->body());
+                info('------------------- End Get Order Error -------------------');
             }
             return null;
         }
