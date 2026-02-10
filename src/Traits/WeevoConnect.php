@@ -2,12 +2,13 @@
 
 namespace Akika\LaravelWeevo\Traits;
 
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
 trait WeevoConnect
 {
 
-    private function makeRequest($url, $body)
+    private function makeRequest(string $url, array $body): Response
     {
         $headers = [
             'Content-Type' => 'application/json',

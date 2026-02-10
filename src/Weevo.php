@@ -6,17 +6,18 @@ use Akika\LaravelWeevo\Traits\WeevoConnect;
 
 class Weevo
 {
-    public $environment;
-    public $debugMode;
-    public $url;
+    public string $environment;
+    public bool $debugMode;
+    public string $url;
 
-    public $username;
-    public $apiKey;
-    public $apiSecret;
+    public string $username;
+    public string $apiKey;
+    public string $apiSecret;
+
     // Your code here
     use WeevoConnect;
 
-    public function __construct($username, $apiKey, $apiSecret)
+    public function __construct(?string $username, ?string $apiKey, ?string $apiSecret)
     {
         $this->username = $username;
         $this->apiKey = $apiKey;
@@ -24,10 +25,17 @@ class Weevo
 
         $this->environment = config('weevo.env');
         $this->debugMode = config('weevo.debug');
-        $this->url = config('weevo.url');
+        $this->url = config('weevo.url.' . $this->environment);
     }
 
-    public function createDelivery($deliveryData)
+    public function setCredentials(string $username, string $apiKey, string $apiSecret): void
+    {
+        $this->username = $username;
+        $this->apiKey = $apiKey;
+        $this->apiSecret = $apiSecret;
+    }
+
+    public function createDelivery(array $deliveryData): ?array
     {
         $url = rtrim($this->url, '/') . '/deliveries/create';
 
@@ -45,7 +53,7 @@ class Weevo
         }
     }
 
-    public function getDelivery($tripId)
+    public function getDelivery(string $tripId): ?array
     {
         $url = rtrim($this->url, '/') . '/deliveries/show/' . $tripId;
 
@@ -63,7 +71,7 @@ class Weevo
         }
     }
 
-    public function getDeliveryStatus($tripId)
+    public function getDeliveryStatus(string $tripId): ?array
     {
         $url = rtrim($this->url, '/') . '/deliveries/status/' . $tripId;
 
