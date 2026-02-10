@@ -33,6 +33,10 @@ class Weevo
         $this->username = $username;
         $this->apiKey = $apiKey;
         $this->apiSecret = $apiSecret;
+
+        if($this->debugMode) {
+            info('------------------- End Set Credentials -------------------');
+        }
     }
 
     public function createDelivery(array $deliveryData): ?array
