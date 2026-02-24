@@ -10,12 +10,20 @@ trait WeevoConnect
 
     private function makeRequest(string $url, array $body): Response
     {
-        $headers = [
-            'Content-Type' => 'application/json',
-            'username' => $this->username,
-            'apikey' => $this->apiKey,
-            'apisecret' => $this->apiSecret
-        ];
+        $headers = [];
+        if ($this->apiToken != '') {
+            $headers = [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->apiToken,
+            ];
+        } else {
+            $headers = [
+                'Content-Type' => 'application/json',
+                'username' => $this->username,
+                'apikey' => $this->apiKey,
+                'apisecret' => $this->apiSecret
+            ];
+        }
 
         $response = Http::withHeaders($headers)->acceptJson();
 
