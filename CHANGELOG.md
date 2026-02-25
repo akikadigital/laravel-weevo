@@ -5,3 +5,7 @@
 ## v0.0.2
 
 - Updates package to work with Laravel 12
+
+## v0.0.3
+
+- Updates SSL checker on API for local tests

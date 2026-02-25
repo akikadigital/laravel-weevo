@@ -25,7 +25,11 @@ trait WeevoConnect
             ];
         }
 
-        $response = Http::withHeaders($headers)->acceptJson();
+        $response = Http::withHeaders($headers)
+            ->acceptJson()
+            ->withOptions([
+                'verify' => config('weevo.verify_ssl', true)
+            ]);
 
         if ($this->debugMode) {
             info('------------------- Make Request -------------------');
