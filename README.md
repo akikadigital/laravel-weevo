@@ -34,3 +34,21 @@ In case Weevo is initialized with null values, the following function can be cal
 ```php
 public function setCredentials($username, $apiKey, $apiSecret);
 ```
+
+## Delivery Statuses
+
+Below are the available statuses
+
+```php
+case Pending = 'pending';
+case Assigned = 'assigned';
+case Picked = 'picked';
+case InTransit = 'in_transit';
+case DeliveryInitiated = 'delivery_initiated';
+case PaymentRequested = 'payment_requested';
+case Delivered = 'delivered';
+case Failed = 'failed';
+case Cancelled = 'cancelled';
+case Returning = 'returning';
+case Returned = 'returned';
+```

@@ -9,3 +9,7 @@
 ## v0.0.3
 
 - Updates SSL checker on API for local tests
+
+## v0.0.4
+
+- Adds Delivery Status enum based on Weevo statuses
