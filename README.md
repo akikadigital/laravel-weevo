@@ -1,6 +1,13 @@
 ## Laravel Weevo Package by [Akika Digital](https://akika.digital)
 
-The Laravel Weevo package allows you to transfer money through the NCBA Open Banking APIs. The package supports Laravel version 5 and above.
+The Laravel Weevo package allows you to connect your application with the Weevo last mile delivery app.
+
+The package automatically requests and caches the Weevo access token using the configured token TTL. You do not need to manually call `authenticate()` before creating deliveries.
+
+## System Requirements
+
+- PHP 8.1+
+- Laravel 10+
 
 ## Installation
 
@@ -14,6 +21,12 @@ After installing the package, publish the configuration file using the following
 
 ```bash
 php artisan weevo:install
+```
+
+You can also run the following command to publish the config file
+
+```bash
+php artisan vendor:publish --tag=weevo-config
 ```
 
 ## ENV Variables
@@ -35,6 +48,12 @@ WEEVO_SANDBOX_URL=https://sandbox.example.com/api
 WEEVO_PRODUCTION_URL=https://example.com/api
 ```
 
+## Facade Import
+
+```php
+use Akika\LaravelWeevo\Facades\Weevo;
+```
+
 ## Initialize library
 
 Use the following snippet to use credentials in the config file
@@ -52,6 +71,20 @@ $credentials = [
     'api_secret' => 'CUSTOM_API_SECRET',
 ];
 Weevo::using($credentials);
+```
+
+You can also use the credentials class as shown below:
+
+```php
+use Akika\LaravelWeevo\Support\WeevoCredentials;
+
+$response = Weevo::using(
+    new WeevoCredentials(
+        username: 'CUSTOM_USERNAME',
+        apiKey: 'CUSTOM_API_KEY',
+        apiSecret: 'CUSTOM_API_SECRET',
+    )
+)->createDelivery($sampleDeliveryData);
 ```
 
 ## Create Delivery
@@ -95,7 +128,7 @@ $sampleDeliveryData = [
             "unitPrice" => 200
         ]
     ],
-    'vehicleType' => 'motor_bike', // Optional: bike, motorcycle, car, van, truck
+    'vehicleType' => 'motor_bike', // Optional: bike, motor_bike, car, van, truck
     'amountCharged' => 300, // Optional
     'instructions' => 'Deliver on time', // As requested by the customer
     'slotStartAt' => '2024-06-01 10:00:00', // Optional
@@ -158,6 +191,7 @@ Current test coverage:
 - ✅ 100% Line Coverage
 - ✅ 100% Method Coverage
 - ✅ 100% Class Coverage
+- ✅ 100% Branches Coverage
 
 Main coverage report:
 
