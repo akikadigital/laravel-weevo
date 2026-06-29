@@ -16,11 +16,21 @@
 		"illuminate/http":"^8.0 || ^9.0 || ^10.0 || ^11.0 || ^12.0",
 		"guzzlehttp/guzzle": "^7.5"
     },
+    "require-dev": {
+        "orchestra/testbench": "^10.11",
+        "pestphp/pest": "^2.0 || ^3.0",
+        "pestphp/pest-plugin-laravel": "^2.0 || ^3.0"
+    },
 	"license": "MIT",
     "autoload": {
       "psr-4": {
         "Akika\\LaravelWeevo\\": "src/"
       }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Akika\\LaravelWeevo\\Tests\\": "tests/"
+        }
     },
 	"authors": [
         {
@@ -37,6 +47,10 @@
 				"Weevo": "Akika\\LaravelWeevo\\Facades\\Weevo"
 			}
       	}
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     }
-  }
-  
+}

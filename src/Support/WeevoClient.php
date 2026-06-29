@@ -135,10 +135,9 @@ class WeevoClient
     protected function tokenCacheKey(): string
     {
         return sprintf(
-            'weevo_token:%s:%s:%s',
+            'weevo_token:%s:%s',
             $this->environment,
-            $this->credentials->username,
-            md5($this->credentials->apiKey)
+            $this->credentials->cacheKey()
         );
     }
 
