@@ -6,75 +6,30 @@ use Illuminate\Console\Command;
 
 class InstallLaravelWeevoPackage extends Command
 {
-    protected $signature = 'weevo:install';
+    protected $signature = 'weevo:install {--force : Overwrite existing config file}';
 
-    protected $description = 'Publish Akika/LaravelWeevo package migrations';
+    protected $description = 'Install the Laravel Weevo package';
 
-    public function handle()
+    public function handle(): int
     {
-        // check if the config file exists
-        if (!$this->checkIfConfigExists()) {
-            $this->publishConfig();
-        } else {
-            // get confirmation from user to overwrite existing config file
-            if ($this->getForceConcentForConfig()) {
-                $this->publishConfig(true);
-            } else {
-                $this->info('Publishing Akika/LaravelWeevo package config file cancelled.');
+        $configExists = file_exists(config_path('weevo.php'));
+
+        if ($configExists && ! $this->option('force')) {
+            if (! $this->confirm('The Weevo config file already exists. Do you want to overwrite it?')) {
+                $this->info('Publishing Weevo config cancelled.');
+
+                return self::SUCCESS;
             }
         }
-    }
 
-    /**
-     * Check if the config file exists
-     * @return bool
-     */
+        $this->call('vendor:publish', [
+            '--provider' => 'Akika\LaravelWeevo\WeevoServiceProvider',
+            '--tag' => 'weevo-config',
+            '--force' => $configExists || $this->option('force'),
+        ]);
 
-    public function checkIfConfigExists()
-    {
-        $this->info('Checking if Akika/LaravelWeevo package config file exists...');
+        $this->info('Laravel Weevo package installed successfully.');
 
-        // check if the config file exists
-        if (file_exists(config_path('weevo.php'))) {
-            $this->info('Akika/LaravelWeevo package config file already exists.');
-            return true;
-        } else {
-            $this->info('Akika/LaravelWeevo package config file does not exist.');
-            return false;
-        }
-    }
-
-    /**
-     * Publish the config file
-     * @param bool $forcePublish
-     * @return void
-     */
-
-    public function publishConfig($forcePublish = false)
-    {
-        $this->info('Publishing Akika/LaravelWeevo package config file...');
-
-        $params = [
-            '--provider' => "Akika\LaravelWeevo\WeevoServiceProvider",
-            '--tag' => "config"
-        ];
-
-        if ($forcePublish) {
-            $params['--force'] = true;
-        }
-
-        $this->call('vendor:publish', $params);
-
-        $this->info('Akika/LaravelWeevo package config file published successfully.');
-    }
-
-    /**
-     * Get confirmation from user to overwrite existing config file
-     * @return bool
-     */
-
-    public function getForceConcentForConfig()
-    {
-        return $this->confirm('Do you want to overwrite existing config file?');
+        return self::SUCCESS;
     }
 }

@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Facade;
 
 class Weevo extends Facade
 {
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
-        return 'laravel-weevo';
+        return 'weevo';
     }
 }
