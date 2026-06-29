@@ -146,3 +146,19 @@ case Cancelled = 'cancelled';
 case Returning = 'returning';
 case Returned = 'returned';
 ```
+
+## Quality Assurance
+
+The package is fully tested using Pest PHP and PHPUnit.
+
+### Test Coverage
+
+Current test coverage:
+
+- ✅ 100% Line Coverage
+- ✅ 100% Method Coverage
+- ✅ 100% Class Coverage
+
+Main coverage report:
+
+![Coverage Report](coverage.png)
