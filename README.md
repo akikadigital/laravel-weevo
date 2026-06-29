@@ -6,8 +6,8 @@ The package automatically requests and caches the Weevo access token using the c
 
 ## System Requirements
 
-- PHP 8.1+
-- Laravel 10+
+- PHP 8.1 or later
+- Laravel 10.x, 11.x or 12.x
 
 ## Installation
 
@@ -28,6 +28,14 @@ You can also run the following command to publish the config file
 ```bash
 php artisan vendor:publish --tag=weevo-config
 ```
+
+The configuration file will be published to:
+
+```text
+config/weevo.php
+```
+
+Laravel automatically discovers the package. No additional service provider registration is required.
 
 ## ENV Variables
 
@@ -70,7 +78,8 @@ $credentials = [
     'api_key' => 'CUSTOM_API_KEY',
     'api_secret' => 'CUSTOM_API_SECRET',
 ];
-Weevo::using($credentials);
+$response = Weevo::using($credentials)
+    ->createDelivery($sampleDeliveryData);
 ```
 
 You can also use the credentials class as shown below:
@@ -140,6 +149,16 @@ $sampleDeliveryData = [
 $response = Weevo::default()->createDelivery($sampleDeliveryData);
 ```
 
+## 6. Mention date format
+
+You use several dates.
+
+State once:
+
+```md
+> All date fields should be supplied in `Y-m-d H:i:s` format.
+```
+
 ## Get delivery details
 
 To show delivery details, pass the trip_id in the function below:
@@ -180,6 +199,30 @@ case Returning = 'returning';
 case Returned = 'returned';
 ```
 
+### Sample Response
+
+All methods return json on success.
+
+```php
+[
+    'success' => true,
+    'message' => 'Delivery created successfully.',
+    'tripId' => 'TRIP-260630-003101-7054',
+]
+```
+
+## Error Handling
+
+All methods return `null` when the request fails.
+
+```php
+$response = Weevo::default()->createDelivery($data);
+
+if ($response === null) {
+    // Request failed
+}
+```
+
 ## Quality Assurance
 
 The package is fully tested using Pest PHP and PHPUnit.
@@ -196,3 +239,7 @@ Current test coverage:
 Main coverage report:
 
 ![Coverage Report](coverage.png)
+
+## License
+
+This package is licensed under the MIT License.
