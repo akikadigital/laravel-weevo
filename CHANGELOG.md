@@ -17,3 +17,7 @@
 ## 0.0.5
 
 - Adds test scripts to the package
+
+## 0.0.6
+
+- Updates config file
