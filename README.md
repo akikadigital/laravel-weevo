@@ -152,13 +152,7 @@ $response = Weevo::default()->createDelivery($sampleDeliveryData);
 
 ## 6. Date format
 
-You use several dates.
-
-State once:
-
-```md
-> All date fields should be supplied in `Y-m-d H:i:s` format.
-```
+All date fields should be supplied in `Y-m-d H:i:s` format.
 
 ## Get delivery details
 
@@ -221,7 +215,10 @@ All methods return json on success.
 [
     'success' => true,
     'message' => 'Delivery created successfully.',
-    'tripId' => 'TRIP-260630-003101-7054',
+    'data' => [
+        'tripId' => 'TRIP-260630-003101-7054',
+        'status' => 'pending'
+    ],
 ]
 ````
 

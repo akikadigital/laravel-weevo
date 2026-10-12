@@ -204,3 +204,69 @@ it('returns null when update payment status fails', function () {
 
     expect($result)->toBeNull();
 });
+
+it('cancels delivery successfully', function () {
+    $tripId = 'TRIP-001';
+
+    $cancelData = [
+        'reason' => 'Customer requested cancellation',
+    ];
+
+    $expectedResponse = [
+        'success' => true,
+        'message' => 'Delivery cancelled successfully',
+    ];
+
+    $client = \Mockery::mock(WeevoClient::class);
+
+    $client->shouldReceive('post')
+        ->once()
+        ->with("/deliveries/{$tripId}/cancel", $cancelData)
+        ->andReturn(fakeResponse(true, $expectedResponse));
+
+    $result = (new Weevo($client))
+        ->cancelDelivery($tripId, $cancelData);
+
+    expect($result)->toBe($expectedResponse);
+});
+
+it('returns null when delivery cancellation fails', function () {
+    $tripId = 'TRIP-001';
+
+    $cancelData = [
+        'reason' => 'Invalid cancellation request',
+    ];
+
+    $client = \Mockery::mock(WeevoClient::class);
+
+    $client->shouldReceive('post')
+        ->once()
+        ->with("/deliveries/{$tripId}/cancel", $cancelData)
+        ->andReturn(fakeResponse(false));
+
+    $result = (new Weevo($client))
+        ->cancelDelivery($tripId, $cancelData);
+
+    expect($result)->toBeNull();
+});
+
+it('cancels delivery without additional data', function () {
+    $tripId = 'TRIP-001';
+
+    $expectedResponse = [
+        'success' => true,
+        'message' => 'Delivery cancelled successfully',
+    ];
+
+    $client = \Mockery::mock(WeevoClient::class);
+
+    $client->shouldReceive('post')
+        ->once()
+        ->with("/deliveries/{$tripId}/cancel", [])
+        ->andReturn(fakeResponse(true, $expectedResponse));
+
+    $result = (new Weevo($client))
+        ->cancelDelivery($tripId);
+
+    expect($result)->toBe($expectedResponse);
+});

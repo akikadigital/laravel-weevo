@@ -46,7 +46,7 @@ class Weevo
         return $this->client;
     }
 
-    protected function authenticate(): ?array
+    public function authenticate(): ?array
     {
         $response = $this->client->post('/get-token');
 
