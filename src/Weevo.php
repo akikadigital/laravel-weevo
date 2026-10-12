@@ -73,4 +73,11 @@ class Weevo
 
         return $response->successful() ? $response->json() : null;
     }
+
+    public function cancelDelivery(string $tripId, array $cancelData = []): ?array
+    {
+        $response = $this->client->post("/deliveries/{$tripId}/cancel", $cancelData);
+
+        return $response->successful() ? $response->json() : null;
+    }
 }

@@ -54,6 +54,7 @@ WEEVO_RETRY_TIMES=2
 WEEVO_RETRY_SLEEP=500
 WEEVO_SANDBOX_URL=https://sandbox.example.com/api
 WEEVO_PRODUCTION_URL=https://example.com/api
+WEEVO_TRACKING_URL='https://example.com/track/'
 ```
 
 ## Facade Import
@@ -149,7 +150,7 @@ $sampleDeliveryData = [
 $response = Weevo::default()->createDelivery($sampleDeliveryData);
 ```
 
-## 6. Mention date format
+## 6. Date format
 
 You use several dates.
 
@@ -199,6 +200,19 @@ case Returning = 'returning';
 case Returned = 'returned';
 ```
 
+## Cancel Delivery
+
+You can call the cancellation endpoint and pass relevant data as shown below:
+
+```php
+$result = Weevo::default()->cancelDelivery(
+    "TRIP-260630-003101-7054",
+    [
+        'reason' => 'Error while placing the request.', // Example reason
+    ]
+);
+```
+
 ### Sample Response
 
 All methods return json on success.
@@ -209,7 +223,7 @@ All methods return json on success.
     'message' => 'Delivery created successfully.',
     'tripId' => 'TRIP-260630-003101-7054',
 ]
-```
+````
 
 ## Error Handling
 

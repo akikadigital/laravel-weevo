@@ -21,3 +21,7 @@
 ## 0.0.6
 
 - Updates config file
+
+## 0.0.7
+
+- Adds trip cancellation feature

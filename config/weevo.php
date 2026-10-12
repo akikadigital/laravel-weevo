@@ -22,4 +22,6 @@ return [
         'sandbox' => env('WEEVO_SANDBOX_URL', 'https://sandbox.example.com/api'),
         'production' => env('WEEVO_PRODUCTION_URL', 'https://example.com/api'),
     ],
+
+    'tracking_url' => env('WEEVO_TRACKING_URL', 'https://example.com/track'),
 ];
