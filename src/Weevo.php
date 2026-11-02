@@ -48,9 +48,15 @@ class Weevo
 
     public function authenticate(): ?array
     {
-        $response = $this->client->post('/get-token');
+        $token = $this->client->getAccessToken();
 
-        return $response->successful() ? $response->json() : null;
+        if (! $token) {
+            return null;
+        }
+
+        return [
+            'token' => $token,
+        ];
     }
 
     public function createDelivery(array $deliveryData): ?array

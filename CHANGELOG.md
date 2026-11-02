@@ -25,3 +25,7 @@
 ## 0.0.7
 
 - Adds trip cancellation feature
+
+## 0.0.8
+
+- Updates authentication

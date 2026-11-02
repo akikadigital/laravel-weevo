@@ -91,30 +91,54 @@ class WeevoClient
             ->get($url, $query);
     }
 
+
     public function getAccessToken(): ?string
     {
-        return Cache::remember(
-            $this->tokenCacheKey(),
-            now()->addSeconds(config('weevo.token_ttl', 3300)),
-            function () {
-                $response = $this->postWithoutToken('/get-token', [
-                    'username' => $this->credentials->username,
-                    'api_key' => $this->credentials->apiKey,
-                    'api_secret' => $this->credentials->apiSecret,
-                ]);
+        if ($this->token) {
+            return $this->token;
+        }
 
-                if (! $response->successful()) {
-                    $this->debug('Weevo token request failed', [
+        $token = Cache::remember(
+            $this->tokenCacheKey(),
+            now()->addSeconds(
+                (int) config('weevo.token_ttl', 3300)
+            ),
+            function () {
+                $response = $this->postWithoutToken(
+                    '/get-token',
+                    [
+                        'username' => $this->credentials->username,
+                        'api_key' => $this->credentials->apiKey,
+                        'api_secret' => $this->credentials->apiSecret,
+                    ]
+                );
+
+                if ($response->failed()) {
+                    $this->debug('Weevo authentication failed', [
                         'status' => $response->status(),
-                        'body' => $response->body(),
                     ]);
 
                     return null;
                 }
 
-                return data_get($response->json(), 'token');
+                $token = data_get($response->json(), 'token');
+
+                if (! is_string($token) || blank($token)) {
+                    $this->debug(
+                        'Weevo authentication response missing token',
+                        ['status' => $response->status()]
+                    );
+
+                    return null;
+                }
+
+                return $token;
             }
         );
+
+        return is_string($token) && filled($token)
+            ? $token
+            : null;
     }
 
     protected function postWithoutToken(string $endpoint, array $payload = []): Response
